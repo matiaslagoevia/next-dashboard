@@ -17,16 +17,7 @@ export async function fetchRevenue() {
   noStore();
 
   try {
-    // Artificially delay a reponse for demo purposes.
-    // Don't do this in real life :)
-
-    console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-
     const data = await sql<Revenue>`SELECT * FROM revenue`;
-
-    console.log('Data fetch complete after 3 seconds.');
-
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -37,11 +28,6 @@ export async function fetchRevenue() {
 export async function fetchLatestInvoices() {
   noStore();
   try {
-
-    // adding a delay here too
-    console.log('Fetching latest invoices...');
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
@@ -53,7 +39,6 @@ export async function fetchLatestInvoices() {
       ...invoice,
       amount: formatCurrency(invoice.amount),
     }));
-    console.log('Data fetch complete after 5 seconds');
     return latestInvoices;
   } catch (error) {
     console.error('Database Error:', error);
@@ -64,10 +49,6 @@ export async function fetchLatestInvoices() {
 export async function fetchCardData() {
   noStore();
   try {
-    // Artificially delay this too, for the hell of it :)
-    console.log('Fetching card data...');
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
@@ -88,8 +69,6 @@ export async function fetchCardData() {
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
     const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
-
-    console.log('Data fetch finished in 1 second');
 
     return {
       numberOfCustomers,
