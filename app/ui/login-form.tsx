@@ -10,6 +10,7 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { Button } from "./button";
 import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "../lib/actions";
+import Link from "next/link";
 
 export default function LoginForm() {
   const [code, action] = useFormState(authenticate, undefined);
@@ -19,6 +20,12 @@ export default function LoginForm() {
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
         </h1>
+        <Link
+          href='https://www.linkedin.com/in/matias-engineer/'
+          className='text-blue-500'
+        >
+          Message me for credentials
+        </Link>
         <div className="w-full">
           <div>
             <label
